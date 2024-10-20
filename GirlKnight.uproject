@@ -1,0 +1,16 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{3AA86F59-4778-D1E1-E2EC-5A8D9AAA93F4}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "GirlKnight",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	]
+}
