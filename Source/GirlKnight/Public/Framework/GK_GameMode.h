@@ -10,18 +10,6 @@
 
 class GK_Game;
 
-USTRUCT(BlueprintType)
-struct FGK_AttackData
-{
-	GENERATED_BODY()
-
-	FName AttackerIndex;
-	// FName VictimIndex;
-
-	float DamageAmount = 0.f;
-	bool  bCrit		   = false;
-};
-
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnCharacterAttack, const FGK_AttackData&);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnCharacterCreate, const FName&);
 
@@ -39,9 +27,9 @@ public:
 	FOnCharacterCreate OnPlayerCharacterCreate;
 	FOnCharacterCreate OnEnemyCharacterCreate;
 
-	FSimpleMulticastDelegate OnGameStart;
-	FSimpleMulticastDelegate OnGameWin;
-	FSimpleMulticastDelegate OnGameOver;
+	FSimpleMulticastDelegate OnBattleStart;
+	FSimpleMulticastDelegate OnWaveWin;
+	FSimpleMulticastDelegate OnPlayerDead;
 	FSimpleMulticastDelegate OnEnemyDead;
 
 	FOnCharacterAttack OnPlayerAttack;

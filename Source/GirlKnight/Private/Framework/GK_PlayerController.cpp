@@ -17,14 +17,16 @@ void AGK_PlayerController::BeginPlay()
 	GameMode = World->GetAuthGameMode<AGK_GameMode>();
 	if (! GameMode) return;
 
-	GameMode->OnPlayerCharacterCreate;
-	GameMode->OnEnemyCharacterCreate;
-	GameMode->OnGameStart;
-	GameMode->OnGameWin;
-	GameMode->OnGameOver;
-	GameMode->OnEnemyDead;
-	GameMode->OnPlayerAttack;
-	GameMode->OnEnemyAttack;
+	GameMode->OnPlayerCharacterCreate.AddLambda([this](const FName& InCharIndex) { OnPlayerSpawn(InCharIndex); });
+	GameMode->OnEnemyCharacterCreate.AddLambda([this](const FName& InCharIndex) { OnEnemySpawn(InCharIndex); });
+
+	GameMode->OnBattleStart.AddLambda([this]() { OnBattleStart(); });
+	GameMode->OnWaveWin.AddLambda([this]() { OnWaveWin(); });
+	GameMode->OnPlayerDead.AddLambda([this]() { OnPlayerDead(); });
+	GameMode->OnEnemyDead.AddLambda([this]() { OnEnemyDead(); });
+
+	GameMode->OnPlayerAttack.AddLambda([this](const FGK_AttackData& AttackParam) { OnPlayerAttack(AttackParam); });
+	GameMode->OnEnemyAttack.AddLambda([this](const FGK_AttackData& AttackParam) { OnEnemyAttack(AttackParam); });
 
 	GameMode->StartGame();
 }

@@ -89,7 +89,7 @@ void AGK_GameMode::StartGame()
 void AGK_GameMode::StartBattle()
 {
 	SetBattleEnabled(true);
-	OnGameStart.Broadcast();
+	OnBattleStart.Broadcast();
 }
 
 void AGK_GameMode::SetBattleEnabled(bool InStarted)
@@ -170,13 +170,13 @@ void AGK_GameMode::ReceiveEnemyDead()
 void AGK_GameMode::ReceivePlayerDead()
 {
 	SetBattleEnabled(false);
-	OnGameOver.Broadcast();
+	OnPlayerDead.Broadcast();
 }
 
 void AGK_GameMode::ReceiveWaveOver()
 {
 	bEnemyWaveEmpty = true;
-	OnGameWin.Broadcast();
+	OnWaveWin.Broadcast();
 }
 
 void AGK_GameMode::ReceivePlayerCreate()

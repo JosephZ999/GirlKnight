@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "GK_GameplayTypes.h"
 #include "GK_PlayerController.generated.h"
 
 class AGK_GameMode;
@@ -23,6 +24,31 @@ private:
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
+
+	// Blueprint Interface
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerSpawn(const FName& InCharIndex);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnemySpawn(const FName& InCharIndex);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerAttack(const FGK_AttackData& InAttackParam);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnemyAttack(const FGK_AttackData& InAttackParam);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerDead();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnemyDead();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBattleStart();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWaveWin();
 
 public:
 	UFUNCTION(BlueprintCallable)
