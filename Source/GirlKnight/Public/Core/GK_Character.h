@@ -23,13 +23,19 @@ private:
 	FName			Index;
 	FCharacterStats Stats;
 
-	float Health   = 0.f;
-	float Cooldown = 0.f;
+	float Health = 0.f;
+	float Power	 = 0.f;
 
 public:
+	FName GetIndex() const { return Index; }
 	float GetDamage() const;
 	float GetHealth() const;
+	float GetPowerPercent() const;
 	float ApplyDamage(float InDamage);
+
+	bool IsAttackReady() const;
+	void ChargePower(float InPower);
+	void SetPower(float InPower);
 
 public:
 	static const GK_Character BaseCharacter;

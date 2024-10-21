@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 
+class GK_Character;
+
 struct FCharacterStats
 {
 	FCharacterStats() {}
@@ -20,8 +22,8 @@ struct FCharacterStats
 
 struct FEventAttack
 {
-	TWeakPtr<class GK_Character> Attacker;
-	TWeakPtr<class GK_Character> Victim;
+	TWeakPtr<GK_Character> Attacker;
+	TWeakPtr<GK_Character> Victim;
 
 	float DamageAmount = 0.f;
 	bool  Crited	   = false;
