@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "GK_GameMode.generated.h"
 
+class GK_Game;
+
 /**
  *
  */
@@ -16,4 +18,10 @@ class GIRLKNIGHT_API AGK_GameMode : public AGameModeBase
 
 public:
 	AGK_GameMode() {}
+
+private:
+	TSharedPtr<GK_Game> GameObject;
+
+public:
+	virtual void StartPlay() override;
 };
