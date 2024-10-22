@@ -35,6 +35,9 @@ public:
 	FOnCharacterAttack OnPlayerAttack;
 	FOnCharacterAttack OnEnemyAttack;
 
+	FSimpleMulticastDelegate OnRightAction;
+	FSimpleMulticastDelegate OnWrongAction;
+
 	// Game Options
 	float InitialStartTimer = 3.f;
 	float EnemyDecharging	= 1.f;
@@ -53,6 +56,8 @@ public:
 
 	FName GetPlayerCharacterIndex() const;
 	FName GetEnemyCharacterIndex() const;
+
+	void GetActionStack(TArray<EPlayerActions>& OutActions) const;
 
 	// Gameplay
 	void StartGame();

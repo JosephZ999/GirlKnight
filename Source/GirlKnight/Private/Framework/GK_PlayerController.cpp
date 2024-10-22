@@ -28,6 +28,9 @@ void AGK_PlayerController::BeginPlay()
 	GameMode->OnPlayerAttack.AddLambda([this](const FGK_AttackData& AttackParam) { OnPlayerAttack(AttackParam); });
 	GameMode->OnEnemyAttack.AddLambda([this](const FGK_AttackData& AttackParam) { OnEnemyAttack(AttackParam); });
 
+	GameMode->OnRightAction.AddLambda([this]() { OnRightAction(); });
+	GameMode->OnWrongAction.AddLambda([this]() { OnWrongAction(); });
+
 	GameMode->StartGame();
 }
 
@@ -49,6 +52,11 @@ void AGK_PlayerController::StartBattle()
 	if (! GameMode) return;
 
 	GameMode->StartBattle();
+}
+
+void AGK_PlayerController::GetActionList(TArray<EPlayerActions>& OutActions) const
+{
+	GameMode->GetActionStack(OutActions);
 }
 
 //-----------------------------------------------// Input Actions
@@ -83,5 +91,3 @@ void AGK_PlayerController::OnArrowRightPressed()
 		GameMode->DoAction(EPlayerActions::Right);
 	}
 }
-
-//-----------------------------------------------// Delegate Handles

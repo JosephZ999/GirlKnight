@@ -33,6 +33,12 @@ protected:
 	void OnEnemySpawn(const FName& InCharIndex);
 
 	UFUNCTION(BlueprintImplementableEvent)
+	void OnRightAction();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWrongAction();
+
+	UFUNCTION(BlueprintImplementableEvent)
 	void OnPlayerAttack(const FGK_AttackData& InAttackParam);
 
 	UFUNCTION(BlueprintImplementableEvent)
@@ -53,6 +59,9 @@ protected:
 public:
 	UFUNCTION(BlueprintCallable)
 	void StartBattle();
+
+	UFUNCTION(BlueprintCallable)
+	void GetActionList(TArray<EPlayerActions>& OutActions) const;
 
 private:
 	// Inputs

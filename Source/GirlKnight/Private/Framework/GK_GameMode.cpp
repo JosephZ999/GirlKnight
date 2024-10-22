@@ -72,6 +72,11 @@ FName AGK_GameMode::GetEnemyCharacterIndex() const
 	return FName();
 }
 
+void AGK_GameMode::GetActionStack(TArray<EPlayerActions>& OutActions) const
+{
+	OutActions = ActionStack;
+}
+
 void AGK_GameMode::StartGame()
 {
 	if (! GetWorld()) return;
@@ -88,6 +93,7 @@ void AGK_GameMode::StartGame()
 void AGK_GameMode::StartBattle()
 {
 	SetBattleEnabled(true);
+	ResetActionStack();
 	OnBattleStart.Broadcast();
 }
 
@@ -107,18 +113,22 @@ void AGK_GameMode::DoAction(EPlayerActions InAction)
 		GameObject->ChargePlayerCharacter(1.f);
 		ActionStack.RemoveAt(0);
 		AddActionToStack();
-		// right action
+		OnRightAction.Broadcast();
 	}
 	else
 	{
 		GameObject->ChargeEnemy(1.f);
-		// wrong action
+		OnWrongAction.Broadcast();
 	}
 }
 
 void AGK_GameMode::ResetActionStack()
 {
 	ActionStack.Empty();
+	for (int32 i = 0; i < 4; ++i)
+	{
+		AddActionToStack();
+	}
 	// broadcast delegate
 }
 
