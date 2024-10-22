@@ -8,13 +8,14 @@ public class GirlKnight : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
 		PublicIncludePaths.AddRange(new string[] { 
 			"GirlKnight/Public/Core",
 			"GirlKnight/Public/Framework",
+			"GirlKnight/Public/UI",
 		});
 
 		// Uncomment if you are using Slate UI
