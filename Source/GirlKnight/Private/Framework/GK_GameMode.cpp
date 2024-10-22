@@ -1,8 +1,8 @@
 // Girl Knight by MoonDi
 
 #include "GK_GameMode.h"
-#include "Core/GK_Game.h"
-#include "Core/GK_Character.h"
+#include "GK_Game.h"
+#include "GK_Character.h"
 
 #include "Engine/World.h"
 #include "TimerManager.h"
@@ -16,8 +16,6 @@ AGK_GameMode::AGK_GameMode()
 
 void AGK_GameMode::StartPlay()
 {
-	Super::StartPlay();
-
 	GameObject = MakeShared<GK_Game>();
 	if (GameObject)
 	{
@@ -26,11 +24,12 @@ void AGK_GameMode::StartPlay()
 		GameObject->OnPlayerCharacterDead	= [this]() { ReceivePlayerDead(); };
 		GameObject->OnWaveOver				= [this]() { ReceiveWaveOver(); };
 		GameObject->OnPlayerCharacterCreate = [this]() { ReceivePlayerCreate(); };
-		GameObject->OnPlayerCharacterCreate = [this]() { ReceiveEnemyCreate(); };
+		GameObject->OnEnemyCharacterCreate	= [this]() { ReceiveEnemyCreate(); };
 
 		GameObject->SetPlayerCharacter(GK_Character::BaseCharacter);
 		GameObject->SetEnemyWave({GK_Character::BaseMonster, GK_Character::BaseMonster});
 	}
+	Super::StartPlay();
 }
 
 void AGK_GameMode::Tick(float InDeltaTime)
@@ -182,7 +181,6 @@ void AGK_GameMode::ReceiveWaveOver()
 void AGK_GameMode::ReceivePlayerCreate()
 {
 	check(GameObject);
-
 	OnPlayerCharacterCreate.Broadcast(GetPlayerCharacterIndex());
 }
 
