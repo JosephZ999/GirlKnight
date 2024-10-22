@@ -4,6 +4,11 @@
 
 DEFINE_LOG_CATEGORY_STATIC(__GK_Game, All, All);
 
+bool GK_Game::HasEnemy() const
+{
+	return EnemyPtr.IsValid() ? EnemyPtr->GetHealth() > 0.f : false;
+}
+
 void GK_Game::SetPlayerCharacter(const GK_Character& InPlayerCharacter)
 {
 	PlayerCharacter = InPlayerCharacter;

@@ -15,8 +15,12 @@ class GIRLKNIGHT_API UGK_ActionSlotWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
+private:
+	int32 Index = INDEX_NONE;
+
 public:
-	int32 Index = 0;
+	int32 GetIndex() const { return Index; }
+	void  SetIndex(int32 InIndex);
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)
@@ -27,4 +31,10 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void ReceiveFadeOut();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void ReceiveSelected();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void ReceiveUnselected();
 };

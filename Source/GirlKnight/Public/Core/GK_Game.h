@@ -33,6 +33,8 @@ public:
 	TSharedPtr<GK_Character> GetPlayerCharacterPtr() const { return PlayerCharacterPtr; }
 	TSharedPtr<GK_Character> GetEnemyCharacterPtr() const { return EnemyPtr; }
 
+	bool HasEnemy() const;
+
 	void SetPlayerCharacter(const GK_Character& InPlayerCharacter);
 	void SetEnemyWave(const TArray<GK_Character>& InEnemyWave);
 	void FinishInit();

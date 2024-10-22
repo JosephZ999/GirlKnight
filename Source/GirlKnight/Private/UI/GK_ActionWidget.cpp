@@ -31,7 +31,7 @@ void UGK_ActionWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
 	for (auto& SlotWidget : ActionSlots)
 	{
 		const FVector2D CurrentPos = SlotWidget->RenderTransform.Translation;
-		const FVector2D DesiredPos = GenerateSlotPosition(SlotWidget->Index);
+		const FVector2D DesiredPos = GenerateSlotPosition(SlotWidget->GetIndex());
 		const float		InterPosX  = FMath::FInterpTo(CurrentPos.X, DesiredPos.X, InDeltaTime, 50.f);
 		SlotWidget->SetRenderTranslation(FVector2D(InterPosX, 0.f));
 	}
@@ -49,10 +49,10 @@ void UGK_ActionWidget::AddActionSlot(EPlayerActions InAction, int32 InPosition)
 			OverlaySlot->SetHorizontalAlignment(EHorizontalAlignment::HAlign_Fill);
 		}
 
-		NewSlotWidget->ReceiveSetIcon(InAction);
-		NewSlotWidget->Index = InPosition;
-		NewSlotWidget->SetRenderTranslation(GenerateSlotPosition(InPosition));
 		NewSlotWidget->ReceiveFadeIn();
+		NewSlotWidget->ReceiveSetIcon(InAction);
+		NewSlotWidget->SetIndex(InPosition);
+		NewSlotWidget->SetRenderTranslation(GenerateSlotPosition(InPosition));
 		ActionSlots.Add(NewSlotWidget);
 	}
 	else
@@ -91,15 +91,16 @@ void UGK_ActionWidget::OnRightAction()
 	const float LastActionIndex = ActionsInPreview - 1;
 	for (int32 i = 0; i < ActionSlots.Num(); ++i)
 	{
-		if (--ActionSlots[i]->Index < (-DeprectedSlotsNum))
+		ActionSlots[i]->SetIndex(ActionSlots[i]->GetIndex() - 1);
+		if (ActionSlots[i]->GetIndex() < (-DeprectedSlotsNum))
 		{
-			SlotSwapped			  = true;
-			ActionSlots[i]->Index = LastActionIndex;
+			SlotSwapped = true;
+			ActionSlots[i]->SetIndex(LastActionIndex);
 			ActionSlots[i]->SetRenderTranslation(GenerateSlotPosition(LastActionIndex));
 			ActionSlots[i]->ReceiveSetIcon(GameMode->GetActionByIndex(LastActionIndex));
 			ActionSlots[i]->ReceiveFadeIn();
 		}
-		else if (ActionSlots[i]->Index == (-DeprectedSlotsNum))
+		else if (ActionSlots[i]->GetIndex() == (-DeprectedSlotsNum))
 		{
 			ActionSlots[i]->ReceiveFadeOut();
 		}

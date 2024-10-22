@@ -49,7 +49,6 @@ public:
 private:
 	TSharedPtr<GK_Game> GameObject;
 	bool				bBattleStarted	= false;
-	bool				bNoEnemy		= false;
 	bool				bEnemyWaveEmpty = false;
 
 	TArray<EPlayerActions> ActionStack;

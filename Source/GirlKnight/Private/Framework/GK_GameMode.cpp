@@ -27,7 +27,8 @@ void AGK_GameMode::StartPlay()
 		GameObject->OnEnemyCharacterCreate	= [this]() { ReceiveEnemyCreate(); };
 
 		GameObject->SetPlayerCharacter(GK_Character::BaseCharacter);
-		GameObject->SetEnemyWave({GK_Character::BaseMonster, GK_Character::BaseMonster});
+		GameObject->SetEnemyWave({GK_Character::BaseMonster, GK_Character::BaseMonster, GK_Character::BaseMonster,
+			GK_Character::BaseMonster, GK_Character::BaseMonster});
 	}
 	Super::StartPlay();
 }
@@ -104,7 +105,7 @@ void AGK_GameMode::StartBattle()
 
 void AGK_GameMode::SpawnEnemy()
 {
-	if (bNoEnemy && ! bEnemyWaveEmpty)
+	if (! GameObject->HasEnemy() && ! bEnemyWaveEmpty)
 	{
 		GameObject->PutEnemy();
 	}
@@ -117,7 +118,7 @@ void AGK_GameMode::SetBattleEnabled(bool InStarted)
 
 void AGK_GameMode::DoAction(EPlayerActions InAction)
 {
-	if (! bBattleStarted || bNoEnemy) return;
+	if (! bBattleStarted || ! GameObject->HasEnemy()) return;
 	if (ActionStack.Num() == 0) return;
 	check(GameObject);
 
@@ -130,6 +131,7 @@ void AGK_GameMode::DoAction(EPlayerActions InAction)
 	}
 	else
 	{
+		UE_LOG(__GK_GameMode, Display, TEXT("Action is wrong; id = %i; Needed = %i;"), static_cast<int32>(InAction), static_cast<int32>(ActionStack[0]));
 		GameObject->ChargeEnemy(1.f);
 		OnWrongAction.Broadcast();
 	}
@@ -188,7 +190,6 @@ void AGK_GameMode::ReceiveCharacterAttack(const FEventAttack& InParam)
 void AGK_GameMode::ReceiveEnemyDead()
 {
 	SetBattleEnabled(false);
-	bNoEnemy = true;
 	OnEnemyDead.Broadcast();
 	OnBattleWin.Broadcast();
 }
