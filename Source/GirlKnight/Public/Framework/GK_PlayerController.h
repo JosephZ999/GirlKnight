@@ -25,18 +25,28 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 
-	// Blueprint Interface
+	// Main
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGameStart();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBattleStart();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBattleWin();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBattleFail();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWaveWin();
+
+	// Characters handling
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnPlayerSpawn(const FName& InCharIndex);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnEnemySpawn(const FName& InCharIndex);
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnRightAction();
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnWrongAction();
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnPlayerAttack(const FGK_AttackData& InAttackParam);
@@ -50,15 +60,19 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnEnemyDead();
 
+	// Player Actions
 	UFUNCTION(BlueprintImplementableEvent)
-	void OnBattleStart();
+	void OnRightAction();
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void OnWaveWin();
+	void OnWrongAction();
 
 public:
 	UFUNCTION(BlueprintCallable)
 	void StartBattle();
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnEnemy();
 
 	UFUNCTION(BlueprintCallable)
 	void GetActionList(TArray<EPlayerActions>& OutActions) const;

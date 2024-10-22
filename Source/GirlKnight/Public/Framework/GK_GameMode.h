@@ -27,7 +27,11 @@ public:
 	FOnCharacterCreate OnPlayerCharacterCreate;
 	FOnCharacterCreate OnEnemyCharacterCreate;
 
+	FSimpleMulticastDelegate OnGameStart;
 	FSimpleMulticastDelegate OnBattleStart;
+	FSimpleMulticastDelegate OnBattleWin;
+	FSimpleMulticastDelegate OnBattleFail;
+
 	FSimpleMulticastDelegate OnWaveWin;
 	FSimpleMulticastDelegate OnPlayerDead;
 	FSimpleMulticastDelegate OnEnemyDead;
@@ -63,6 +67,7 @@ public:
 	// Gameplay
 	void StartGame();
 	void StartBattle();
+	void SpawnEnemy();
 
 	void DoAction(EPlayerActions InAction);
 

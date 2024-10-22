@@ -20,7 +20,11 @@ void AGK_PlayerController::BeginPlay()
 	GameMode->OnPlayerCharacterCreate.AddLambda([this](const FName& InCharIndex) { OnPlayerSpawn(InCharIndex); });
 	GameMode->OnEnemyCharacterCreate.AddLambda([this](const FName& InCharIndex) { OnEnemySpawn(InCharIndex); });
 
+	GameMode->OnGameStart.AddLambda([this]() { OnGameStart(); });
 	GameMode->OnBattleStart.AddLambda([this]() { OnBattleStart(); });
+	GameMode->OnBattleWin.AddLambda([this]() { OnBattleWin(); });
+	GameMode->OnBattleFail.AddLambda([this]() { OnBattleFail(); });
+
 	GameMode->OnWaveWin.AddLambda([this]() { OnWaveWin(); });
 	GameMode->OnPlayerDead.AddLambda([this]() { OnPlayerDead(); });
 	GameMode->OnEnemyDead.AddLambda([this]() { OnEnemyDead(); });
@@ -52,6 +56,14 @@ void AGK_PlayerController::StartBattle()
 	if (! GameMode) return;
 
 	GameMode->StartBattle();
+}
+
+void AGK_PlayerController::SpawnEnemy() 
+{
+	if (GameMode)
+	{
+		GameMode->SpawnEnemy();
+	}
 }
 
 void AGK_PlayerController::GetActionList(TArray<EPlayerActions>& OutActions) const

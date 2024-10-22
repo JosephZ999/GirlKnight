@@ -39,12 +39,6 @@ void AGK_GameMode::Tick(float InDeltaTime)
 	// Handle Battle
 	if (! GameObject) return;
 
-	// Put Enemies
-	if (bNoEnemy && ! bEnemyWaveEmpty)
-	{
-		GameObject->PutEnemy();
-	}
-
 	// Battle
 	if (bBattleStarted)
 	{
@@ -93,10 +87,12 @@ void AGK_GameMode::StartGame()
 	check(GameObject);
 
 	GameObject->PutPlayer();
-	GameObject->PutEnemy();
 
-	// FTimerHandle StartGameTimer;
-	// GetWorldTimerManager().SetTimer(StartGameTimer, this, &ThisClass::StartBattle, InitialStartTimer, false);
+	FTimerHandle StartGameTimer;
+	auto		 StartFunc = [this]() { //
+		OnGameStart.Broadcast();
+	};
+	GetWorldTimerManager().SetTimer(StartGameTimer, StartFunc, InitialStartTimer, false);
 }
 
 void AGK_GameMode::StartBattle()
@@ -104,6 +100,14 @@ void AGK_GameMode::StartBattle()
 	SetBattleEnabled(true);
 	ResetActionStack();
 	OnBattleStart.Broadcast();
+}
+
+void AGK_GameMode::SpawnEnemy()
+{
+	if (bNoEnemy && ! bEnemyWaveEmpty)
+	{
+		GameObject->PutEnemy();
+	}
 }
 
 void AGK_GameMode::SetBattleEnabled(bool InStarted)
@@ -186,12 +190,14 @@ void AGK_GameMode::ReceiveEnemyDead()
 	SetBattleEnabled(false);
 	bNoEnemy = true;
 	OnEnemyDead.Broadcast();
+	OnBattleWin.Broadcast();
 }
 
 void AGK_GameMode::ReceivePlayerDead()
 {
 	SetBattleEnabled(false);
 	OnPlayerDead.Broadcast();
+	OnBattleFail.Broadcast();
 }
 
 void AGK_GameMode::ReceiveWaveOver()
