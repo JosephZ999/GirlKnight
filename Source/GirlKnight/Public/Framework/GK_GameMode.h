@@ -24,6 +24,29 @@ class GIRLKNIGHT_API AGK_GameMode : public AGameModeBase
 public:
 	AGK_GameMode();
 
+	UPROPERTY(EditAnywhere, Category = "GameOptions")
+	float InitialStartTimer = 2.f;
+
+	UPROPERTY(EditAnywhere, Category = "GameOptions | Actions")
+	float AddPowerRightAction = 1.f;
+
+	UPROPERTY(EditAnywhere, Category = "GameOptions | Actions")
+	float DecreasePowerWrongAction = 0.f;
+
+	UPROPERTY(EditAnywhere, Category = "GameOptions | Actions")
+	float AddEnemyPowerWrongAction = 1.f;
+
+	UPROPERTY(EditAnywhere, Category = "GameOptions | Actions")
+	float DecreaseEnemyPowerRightAction = 0.f;
+
+	// Game Options
+	UPROPERTY(EditAnywhere, Category = "GameOptions | Hit")
+	float DechargePlayerOnHit = 1.f;
+
+	UPROPERTY(EditAnywhere, Category = "GameOptions | Hit")
+	float DechargeEnemyOnHit = 1.f;
+
+	// Delegates
 	FOnCharacterCreate OnPlayerCharacterCreate;
 	FOnCharacterCreate OnEnemyCharacterCreate;
 
@@ -41,10 +64,6 @@ public:
 
 	FSimpleMulticastDelegate OnRightAction;
 	FSimpleMulticastDelegate OnWrongAction;
-
-	// Game Options
-	float InitialStartTimer = 3.f;
-	float EnemyDecharging	= 1.f;
 
 private:
 	TSharedPtr<GK_Game> GameObject;

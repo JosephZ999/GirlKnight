@@ -124,15 +124,16 @@ void AGK_GameMode::DoAction(EPlayerActions InAction)
 
 	if (InAction == ActionStack[0])
 	{
-		GameObject->ChargePlayerCharacter(1.f);
+		GameObject->ChargePlayerCharacter(AddPowerRightAction);
+		GameObject->ChargeEnemy(DecreaseEnemyPowerRightAction * -1.f);
 		ActionStack.RemoveAt(0);
 		AddActionToStack();
 		OnRightAction.Broadcast();
 	}
 	else
 	{
-		UE_LOG(__GK_GameMode, Display, TEXT("Action is wrong; id = %i; Needed = %i;"), static_cast<int32>(InAction), static_cast<int32>(ActionStack[0]));
-		GameObject->ChargeEnemy(1.f);
+		GameObject->ChargePlayerCharacter(DecreasePowerWrongAction * -1.f);
+		GameObject->ChargeEnemy(AddEnemyPowerWrongAction);
 		OnWrongAction.Broadcast();
 	}
 }
@@ -169,6 +170,9 @@ void AGK_GameMode::ReceiveCharacterAttack(const FEventAttack& InParam)
 	GameObject->ResetCharacterPower(InParam.Attacker);
 	if (GameObject->IsEnemy(InParam.Attacker))
 	{
+		// Player Hit
+		GameObject->ChargePlayerCharacter(-(DechargePlayerOnHit));
+
 		FGK_AttackData AttackData;
 		AttackData.AttackerIndex = InParam.Attacker.Pin()->GetIndex();
 		AttackData.DamageAmount	 = InParam.DamageAmount;
@@ -177,7 +181,8 @@ void AGK_GameMode::ReceiveCharacterAttack(const FEventAttack& InParam)
 	}
 	else
 	{
-		GameObject->ChargeEnemy(-(EnemyDecharging));
+		// Enemy Hit
+		GameObject->ChargeEnemy(-(DechargeEnemyOnHit));
 
 		FGK_AttackData AttackData;
 		AttackData.AttackerIndex = InParam.Attacker.Pin()->GetIndex();
