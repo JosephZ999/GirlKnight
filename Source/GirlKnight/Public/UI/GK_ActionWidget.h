@@ -7,6 +7,7 @@
 #include "GK_GameplayTypes.h"
 #include "GK_ActionWidget.generated.h"
 
+class AGK_GameMode;
 class UGK_ActionSlotWidget;
 class UOverlay;
 
@@ -31,14 +32,27 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Slots")
 	float SpaceBetweenSlots = 10.f;
 
+	UPROPERTY(EditAnywhere, Category = "Slots")
+	int32 DeprectedSlotsNum = 3;
+
 private:
+	UPROPERTY()
+	AGK_GameMode* GameMode;
+
 	UPROPERTY()
 	TArray<UGK_ActionSlotWidget*> ActionSlots;
 
+	UPROPERTY()
+	int32 ActionsInPreview = 3;
+
 protected:
 	virtual void NativeOnInitialized() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 private:
 	void	  AddActionSlot(EPlayerActions InAction, int32 InPosition);
 	FVector2D GenerateSlotPosition(int32 InPosition) const;
+
+	void OnRightAction();
+	void OnWrongAction();
 };

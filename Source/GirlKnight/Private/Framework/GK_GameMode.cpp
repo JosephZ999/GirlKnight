@@ -77,6 +77,15 @@ void AGK_GameMode::GetActionStack(TArray<EPlayerActions>& OutActions) const
 	OutActions = ActionStack;
 }
 
+EPlayerActions AGK_GameMode::GetActionByIndex(int32 InIndex) const
+{
+	if (ActionStack.IsValidIndex(InIndex))
+	{
+		return ActionStack[InIndex];
+	}
+	return EPlayerActions::None;
+}
+
 void AGK_GameMode::StartGame()
 {
 	if (! GetWorld()) return;
@@ -141,7 +150,10 @@ void AGK_GameMode::AddActionToStack()
 
 EPlayerActions AGK_GameMode::GenerateAction()
 {
-	return EPlayerActions();
+	TArray<EPlayerActions> ActionArr = {
+		{EPlayerActions::Up, EPlayerActions::Down, EPlayerActions::Left, EPlayerActions::Right}, {} //
+	};
+	return ActionArr[FMath::RandRange(0, ActionArr.Num() - 1)];
 }
 
 //-----------------------------------------------// Callback functions

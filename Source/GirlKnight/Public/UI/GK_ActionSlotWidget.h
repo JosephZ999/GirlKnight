@@ -19,6 +19,6 @@ public:
 	int32 Index = 0;
 
 public:
-	UPROPERTY(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent)
 	void ReceiveSetIcon(EPlayerActions InActionType);
 };

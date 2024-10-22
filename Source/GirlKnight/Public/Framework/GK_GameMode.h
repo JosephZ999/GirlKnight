@@ -57,7 +57,8 @@ public:
 	FName GetPlayerCharacterIndex() const;
 	FName GetEnemyCharacterIndex() const;
 
-	void GetActionStack(TArray<EPlayerActions>& OutActions) const;
+	void		   GetActionStack(TArray<EPlayerActions>& OutActions) const;
+	EPlayerActions GetActionByIndex(int32 InIndex) const;
 
 	// Gameplay
 	void StartGame();
