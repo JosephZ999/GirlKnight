@@ -18,11 +18,9 @@ void UGK_ActionWidget::NativeOnInitialized()
 	{
 		GameMode->OnRightAction.AddUObject(this, &ThisClass::OnRightAction);
 		GameMode->OnWrongAction.AddUObject(this, &ThisClass::OnWrongAction);
-
-		for (int32 i = 0; i < ActionsInPreview; ++i)
-		{
-			AddActionSlot(GameMode->GetActionByIndex(i), i);
-		}
+		GameMode->OnBattleStart.AddUObject(this, &ThisClass::OnBattleStart);
+		Clean();
+		Init();
 	}
 }
 
@@ -34,7 +32,7 @@ void UGK_ActionWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
 	{
 		const FVector2D CurrentPos = SlotWidget->RenderTransform.Translation;
 		const FVector2D DesiredPos = GenerateSlotPosition(SlotWidget->Index);
-		const float		InterPosX  = FMath::FInterpTo(CurrentPos.X, DesiredPos.X, InDeltaTime, 100.f);
+		const float		InterPosX  = FMath::FInterpTo(CurrentPos.X, DesiredPos.X, InDeltaTime, 50.f);
 		SlotWidget->SetRenderTranslation(FVector2D(InterPosX, 0.f));
 	}
 }
@@ -54,6 +52,7 @@ void UGK_ActionWidget::AddActionSlot(EPlayerActions InAction, int32 InPosition)
 		NewSlotWidget->ReceiveSetIcon(InAction);
 		NewSlotWidget->Index = InPosition;
 		NewSlotWidget->SetRenderTranslation(GenerateSlotPosition(InPosition));
+		NewSlotWidget->ReceiveFadeIn();
 		ActionSlots.Add(NewSlotWidget);
 	}
 	else
@@ -64,33 +63,61 @@ void UGK_ActionWidget::AddActionSlot(EPlayerActions InAction, int32 InPosition)
 
 FVector2D UGK_ActionWidget::GenerateSlotPosition(int32 InPosition) const
 {
-	return FVector2D(SlotSize + SpaceBetweenSlots * (float)InPosition, 0.f);
+	return FVector2D((SlotSize + SpaceBetweenSlots) * (float)InPosition, 0.f);
+}
+
+void UGK_ActionWidget::Init()
+{
+	for (int32 i = 0; i < ActionsInPreview; ++i)
+	{
+		AddActionSlot(GameMode->GetActionByIndex(i), i);
+	}
+}
+
+void UGK_ActionWidget::Clean()
+{
+	for (auto& SlotWidget : ActionSlots)
+	{
+		SlotWidget->RemoveFromParent();
+	}
+	ActionSlots.Empty();
 }
 
 void UGK_ActionWidget::OnRightAction()
 {
 	check(GameMode);
 
-	bool SlotSwapped = false;
+	bool		SlotSwapped		= false;
+	const float LastActionIndex = ActionsInPreview - 1;
 	for (int32 i = 0; i < ActionSlots.Num(); ++i)
 	{
 		if (--ActionSlots[i]->Index < (-DeprectedSlotsNum))
 		{
 			SlotSwapped			  = true;
-			ActionSlots[i]->Index = ActionsInPreview;
-			ActionSlots[i]->SetRenderTranslation(GenerateSlotPosition(ActionsInPreview));
-			ActionSlots[i]->ReceiveSetIcon(GameMode->GetActionByIndex(ActionsInPreview));
+			ActionSlots[i]->Index = LastActionIndex;
+			ActionSlots[i]->SetRenderTranslation(GenerateSlotPosition(LastActionIndex));
+			ActionSlots[i]->ReceiveSetIcon(GameMode->GetActionByIndex(LastActionIndex));
+			ActionSlots[i]->ReceiveFadeIn();
+		}
+		else if (ActionSlots[i]->Index == (-DeprectedSlotsNum))
+		{
+			ActionSlots[i]->ReceiveFadeOut();
 		}
 	}
 
 	if (! SlotSwapped)
 	{
-
-		AddActionSlot(GameMode->GetActionByIndex(ActionsInPreview), ActionsInPreview);
+		AddActionSlot(GameMode->GetActionByIndex(LastActionIndex), LastActionIndex);
 	}
 }
 
 void UGK_ActionWidget::OnWrongAction()
 {
 	// play some animation
+}
+
+void UGK_ActionWidget::OnBattleStart()
+{
+	Clean();
+	Init();
 }

@@ -95,8 +95,8 @@ void AGK_GameMode::StartGame()
 	GameObject->PutPlayer();
 	GameObject->PutEnemy();
 
-	FTimerHandle StartGameTimer;
-	GetWorldTimerManager().SetTimer(StartGameTimer, this, &ThisClass::StartBattle, InitialStartTimer, false);
+	// FTimerHandle StartGameTimer;
+	// GetWorldTimerManager().SetTimer(StartGameTimer, this, &ThisClass::StartBattle, InitialStartTimer, false);
 }
 
 void AGK_GameMode::StartBattle()

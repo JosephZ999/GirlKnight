@@ -21,4 +21,10 @@ public:
 public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void ReceiveSetIcon(EPlayerActions InActionType);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void ReceiveFadeIn();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void ReceiveFadeOut();
 };

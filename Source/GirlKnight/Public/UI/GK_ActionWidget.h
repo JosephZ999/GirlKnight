@@ -30,10 +30,10 @@ public:
 	float SlotSize = 100.f;
 
 	UPROPERTY(EditAnywhere, Category = "Slots")
-	float SpaceBetweenSlots = 10.f;
+	float SpaceBetweenSlots = 20.f;
 
 	UPROPERTY(EditAnywhere, Category = "Slots")
-	int32 DeprectedSlotsNum = 3;
+	int32 DeprectedSlotsNum = 4;
 
 private:
 	UPROPERTY()
@@ -53,6 +53,11 @@ private:
 	void	  AddActionSlot(EPlayerActions InAction, int32 InPosition);
 	FVector2D GenerateSlotPosition(int32 InPosition) const;
 
+	void Init();
+	void Clean();
+
 	void OnRightAction();
 	void OnWrongAction();
+
+	void OnBattleStart();
 };
