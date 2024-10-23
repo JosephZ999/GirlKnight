@@ -30,7 +30,10 @@ public:
 	FName GetIndex() const { return Index; }
 	float GetDamage() const;
 	float GetHealth() const;
+	float GetHealthPercent() const;
 	float GetPowerPercent() const;
+
+
 	float ApplyDamage(float InDamage);
 
 	bool IsAttackReady() const;

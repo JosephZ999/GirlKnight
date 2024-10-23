@@ -67,6 +67,58 @@ FName AGK_GameMode::GetEnemyCharacterIndex() const
 	return FName();
 }
 
+float AGK_GameMode::GetPlayerHealthPercent() const
+{
+	if (GameObject)
+	{
+		auto CharPtr = GameObject->GetPlayerCharacterPtr();
+		if (CharPtr)
+		{
+			return CharPtr->GetHealthPercent();
+		}
+	}
+	return 0.0f;
+}
+
+float AGK_GameMode::GetPlayerPowerPercent() const
+{
+	if (GameObject)
+	{
+		auto CharPtr = GameObject->GetPlayerCharacterPtr();
+		if (CharPtr)
+		{
+			return CharPtr->GetPowerPercent();
+		}
+	}
+	return 0.0f;
+}
+
+float AGK_GameMode::GetEnemyHealthPercent() const
+{
+	if (GameObject)
+	{
+		auto CharPtr = GameObject->GetEnemyCharacterPtr();
+		if (CharPtr)
+		{
+			return CharPtr->GetHealthPercent();
+		}
+	}
+	return 0.0f;
+}
+
+float AGK_GameMode::GetEnemyPowerPercent() const
+{
+	if (GameObject)
+	{
+		auto CharPtr = GameObject->GetEnemyCharacterPtr();
+		if (CharPtr)
+		{
+			return CharPtr->GetPowerPercent();
+		}
+	}
+	return 0.0f;
+}
+
 void AGK_GameMode::GetActionStack(TArray<EPlayerActions>& OutActions) const
 {
 	OutActions = ActionStack;

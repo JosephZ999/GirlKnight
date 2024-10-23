@@ -15,6 +15,15 @@ float GK_Character::GetHealth() const
 	return Health;
 }
 
+float GK_Character::GetHealthPercent() const
+{
+	if (Stats.Health > 0.f)
+	{
+		return FMath::Clamp(Health / Stats.Health, 0.f, 1.f);
+	}
+	return 1.f;
+}
+
 float GK_Character::GetPowerPercent() const
 {
 	if (Stats.Cooldown > 0.f)

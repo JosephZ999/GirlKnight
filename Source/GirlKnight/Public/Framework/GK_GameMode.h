@@ -78,6 +78,11 @@ public:
 
 	FName GetPlayerCharacterIndex() const;
 	FName GetEnemyCharacterIndex() const;
+	float GetPlayerHealthPercent() const;
+	float GetPlayerPowerPercent() const;
+	float GetEnemyHealthPercent() const;
+	float GetEnemyPowerPercent() const;
+
 
 	void		   GetActionStack(TArray<EPlayerActions>& OutActions) const;
 	EPlayerActions GetActionByIndex(int32 InIndex) const;
