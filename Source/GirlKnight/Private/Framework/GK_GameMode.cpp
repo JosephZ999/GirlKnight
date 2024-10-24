@@ -26,9 +26,18 @@ void AGK_GameMode::StartPlay()
 		GameObject->OnPlayerCharacterCreate = [this]() { ReceivePlayerCreate(); };
 		GameObject->OnEnemyCharacterCreate	= [this]() { ReceiveEnemyCreate(); };
 
-		GameObject->SetPlayerCharacter(GK_Character::BaseCharacter);
-		GameObject->SetEnemyWave({GK_Character::BaseMonster, GK_Character::BaseMonster, GK_Character::BaseMonster,
-			GK_Character::BaseMonster, GK_Character::BaseMonster});
+		GameObject->SetPlayerCharacter(GK_Character::Knight);
+		GameObject->SetEnemyWave({//
+			GK_Character::Goblin, //
+			GK_Character::Goblin, //
+			GK_Character::Eye,	  //
+			GK_Character::Goblin, //
+			GK_Character::Goblin, //
+			GK_Character::Eye,	  //
+			GK_Character::Goblin, //
+			GK_Character::Eye,	  //
+			GK_Character::Eye,	  //
+			GK_Character::Boss});
 	}
 	Super::StartPlay();
 }

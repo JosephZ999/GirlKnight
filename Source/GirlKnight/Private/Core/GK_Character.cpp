@@ -2,8 +2,10 @@
 
 #include "GK_Character.h"
 
-const GK_Character GK_Character::BaseCharacter = GK_Character("BaseCharacter", FCharacterStats(10.f, 2.f, 3.f));
-const GK_Character GK_Character::BaseMonster   = GK_Character("BaseMonster", FCharacterStats(5.f, 5.f, 5.f));
+const GK_Character GK_Character::Knight = GK_Character("Knight", FCharacterStats(10.f, 2.f, 3.f));
+const GK_Character GK_Character::Goblin = GK_Character("Goblin", FCharacterStats(5.f, 2.f, 5.f));
+const GK_Character GK_Character::Eye	= GK_Character("Eye", FCharacterStats(3.f, 1.f, 3.f));
+const GK_Character GK_Character::Boss	= GK_Character("Boss", FCharacterStats(15.f, 5.f, 7.f));
 
 float GK_Character::GetDamage() const
 {

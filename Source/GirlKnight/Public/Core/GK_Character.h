@@ -41,6 +41,8 @@ public:
 	void SetPower(float InPower);
 
 public:
-	static const GK_Character BaseCharacter;
-	static const GK_Character BaseMonster;
+	static const GK_Character Knight;
+	static const GK_Character Goblin;
+	static const GK_Character Eye;
+	static const GK_Character Boss;
 };
