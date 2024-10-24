@@ -72,6 +72,8 @@ private:
 
 	TArray<EPlayerActions> ActionStack;
 
+	int32 InitialWaveSize = 0;
+
 public:
 	virtual void StartPlay() override;
 	virtual void Tick(float InDeltaTime) override;
@@ -83,7 +85,6 @@ public:
 	float GetEnemyHealthPercent() const;
 	float GetEnemyPowerPercent() const;
 
-
 	void		   GetActionStack(TArray<EPlayerActions>& OutActions) const;
 	EPlayerActions GetActionByIndex(int32 InIndex) const;
 
@@ -93,6 +94,9 @@ public:
 	void SpawnEnemy();
 
 	void DoAction(EPlayerActions InAction);
+
+	UFUNCTION(BlueprintCallable)
+	float GetProgressPercent() const;
 
 private:
 	void SetBattleEnabled(bool InStarted);

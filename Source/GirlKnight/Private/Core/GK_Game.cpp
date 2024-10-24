@@ -4,6 +4,11 @@
 
 DEFINE_LOG_CATEGORY_STATIC(__GK_Game, All, All);
 
+int32 GK_Game::GetWaveSize() const
+{
+	return EnemyWave.Num();
+}
+
 bool GK_Game::HasEnemy() const
 {
 	return EnemyPtr.IsValid() ? EnemyPtr->GetHealth() > 0.f : false;

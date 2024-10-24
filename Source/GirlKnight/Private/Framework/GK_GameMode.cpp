@@ -140,6 +140,7 @@ void AGK_GameMode::StartGame()
 	check(GameObject);
 
 	GameObject->PutPlayer();
+	InitialWaveSize = GameObject->GetWaveSize();
 
 	FTimerHandle StartGameTimer;
 	auto		 StartFunc = [this]() { //
@@ -188,6 +189,16 @@ void AGK_GameMode::DoAction(EPlayerActions InAction)
 		GameObject->ChargeEnemy(AddEnemyPowerWrongAction);
 		OnWrongAction.Broadcast();
 	}
+}
+
+float AGK_GameMode::GetProgressPercent() const
+{
+	if (GameObject)
+	{
+		const int32 CurrentWaveSize = GameObject->GetWaveSize();
+		return 1.f - (float(CurrentWaveSize + 1) / float(InitialWaveSize));
+	}
+	return 0.0f;
 }
 
 void AGK_GameMode::ResetActionStack()
