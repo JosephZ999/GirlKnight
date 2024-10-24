@@ -60,6 +60,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnEnemyDead();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPutLastEnemy();
+
 	// Player Actions
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnRightAction();

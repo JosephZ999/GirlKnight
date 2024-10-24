@@ -55,6 +55,7 @@ public:
 	FSimpleMulticastDelegate OnBattleWin;
 	FSimpleMulticastDelegate OnBattleFail;
 
+	FSimpleMulticastDelegate OnPutLastEnemy;
 	FSimpleMulticastDelegate OnWaveWin;
 	FSimpleMulticastDelegate OnPlayerDead;
 	FSimpleMulticastDelegate OnEnemyDead;

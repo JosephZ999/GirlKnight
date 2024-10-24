@@ -160,7 +160,13 @@ void AGK_GameMode::SpawnEnemy()
 {
 	if (! GameObject->HasEnemy() && ! bEnemyWaveEmpty)
 	{
-		GameObject->PutEnemy();
+		if (GameObject->PutEnemy())
+		{
+			if (GameObject->GetWaveSize() == 0)
+			{
+				OnPutLastEnemy.Broadcast();
+			}
+		}
 	}
 }
 

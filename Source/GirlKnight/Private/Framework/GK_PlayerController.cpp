@@ -25,6 +25,7 @@ void AGK_PlayerController::BeginPlay()
 	GameMode->OnBattleWin.AddLambda([this]() { OnBattleWin(); });
 	GameMode->OnBattleFail.AddLambda([this]() { OnBattleFail(); });
 
+	GameMode->OnPutLastEnemy.AddLambda([this]() { OnPutLastEnemy(); });
 	GameMode->OnWaveWin.AddLambda([this]() { OnWaveWin(); });
 	GameMode->OnPlayerDead.AddLambda([this]() { OnPlayerDead(); });
 	GameMode->OnEnemyDead.AddLambda([this]() { OnEnemyDead(); });
@@ -58,7 +59,7 @@ void AGK_PlayerController::StartBattle()
 	GameMode->StartBattle();
 }
 
-void AGK_PlayerController::SpawnEnemy() 
+void AGK_PlayerController::SpawnEnemy()
 {
 	if (GameMode)
 	{
