@@ -30,6 +30,8 @@ void AGK_GameMode::StartPlay()
 		GameObject->SetEnemyWave({//
 			GK_Character::Goblin, //
 			GK_Character::Goblin, //
+			GK_Character::Goblin, //
+			GK_Character::Goblin, //
 			GK_Character::Eye,	  //
 			GK_Character::Goblin, //
 			GK_Character::Goblin, //
